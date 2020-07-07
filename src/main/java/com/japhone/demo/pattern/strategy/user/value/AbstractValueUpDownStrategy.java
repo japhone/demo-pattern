@@ -1,4 +1,4 @@
-package com.japhone.demo.pattern.strategy.user.growth;
+package com.japhone.demo.pattern.strategy.user.value;
 
 import com.japhone.demo.model.bo.UserBo;
 import com.japhone.demo.model.bo.UserUpDownLevelConditionConfigBo;
@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * created by liukai on 2020-07-03
- * 成长值升降级策略
+ * 消费、销售、结算额度升降级策略
  */
-public abstract class AbstractGrowthUpDownStrategy implements IUpDownStrategy {
+public abstract class AbstractValueUpDownStrategy implements IUpDownStrategy {
 
-    Logger logger = LoggerFactory.getLogger(AbstractGrowthUpDownStrategy.class);
+    Logger logger = LoggerFactory.getLogger(AbstractValueUpDownStrategy.class);
 
     @Override
     public boolean check(UserBo userBo, UserUpDownLevelConditionConfigBo conditionConfig) {
@@ -26,16 +26,16 @@ public abstract class AbstractGrowthUpDownStrategy implements IUpDownStrategy {
             return false;
         }
 
-        Integer growthValue = getGrowthValue(userBo.getId());
+        Integer value = getValue(userBo.getId());
 
         if (conditionConfig.getUpDownFlag().compareTo(LevelUpDownFlagEnum.UP_FLAG.getCode()) == 0){//升级条件
-            if(growthValue.compareTo(Integer.valueOf(conditionValue)) >= 0) {
+            if(value.compareTo(Integer.valueOf(conditionValue)) >= 0) {
                 return true;
             }else{
                 return false;
             }
         }else if(conditionConfig.getUpDownFlag().compareTo(LevelUpDownFlagEnum.DOWN_FLAG.getCode()) == 0){//降级条件
-            if(growthValue.compareTo(Integer.valueOf(conditionValue)) < 0) {
+            if(value.compareTo(Integer.valueOf(conditionValue)) < 0) {
                 return true;
             }else{
                 return false;
@@ -45,10 +45,10 @@ public abstract class AbstractGrowthUpDownStrategy implements IUpDownStrategy {
     }
 
     /**
-     * 查询用户成长值，收其子类实现
+     * 查询用户额度，由其子类实现
      * @param userId
      * @return
      */
-    public abstract Integer getGrowthValue(Long userId);
+    public abstract Integer getValue(Long userId);
 
 }

@@ -48,7 +48,7 @@ public class StrategyTest {
         userUpDownLevelConditionConfigBo.setTargetLevelCode(1002);
         userUpDownLevelConditionConfigBo.setTargetLevelName("VIP");
         userUpDownLevelConditionConfigBo.setConditionCode(2010);
-        userUpDownLevelConditionConfigBo.setConditionName("消费累计成长值");
+        userUpDownLevelConditionConfigBo.setConditionName("消费累计额度");
         userUpDownLevelConditionConfigBo.setConditionValue("1000");
         userUpDownLevelConditionConfigBo.setDescription("会员升VIP");
         conditionList.add(userUpDownLevelConditionConfigBo);
@@ -60,7 +60,7 @@ public class StrategyTest {
         userUpDownLevelConditionConfigBo.setTargetLevelCode(1003);
         userUpDownLevelConditionConfigBo.setTargetLevelName("特约店");
         userUpDownLevelConditionConfigBo.setConditionCode(2040);
-        userUpDownLevelConditionConfigBo.setConditionName("销售累计成长值");
+        userUpDownLevelConditionConfigBo.setConditionName("销售累计额度");
         userUpDownLevelConditionConfigBo.setConditionValue("5000");
         userUpDownLevelConditionConfigBo.setDescription("VIP升特约店");
         conditionList.add(userUpDownLevelConditionConfigBo);
