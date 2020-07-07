@@ -4,7 +4,7 @@ import com.japhone.demo.model.bo.UserBo;
 import com.japhone.demo.model.bo.UserUpDownLevelConditionConfigBo;
 
 /**
- * created by liukai on 2020-07-03
+ * created by japhone on 2020-07-03
  * 升降级策略类
  */
 public interface IUpDownStrategy {

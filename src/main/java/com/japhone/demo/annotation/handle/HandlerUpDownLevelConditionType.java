@@ -5,7 +5,7 @@ import com.japhone.demo.model.enums.LevelConditionEnum;
 import java.lang.annotation.*;
 
 /**
- * created by liukai on 2020-06-16
+ * created by japhone on 2020-06-16
  * 自定义策略类型
  */
 @Target(ElementType.TYPE)  //作用在类上

@@ -6,7 +6,7 @@ import com.japhone.demo.pattern.strategy.user.value.AbstractValueUpDownStrategy;
 import org.springframework.stereotype.Component;
 
 /**
- * created by liukai on 2020-07-03
+ * created by japhone on 2020-07-03
  * 结算额度升降级策略
  */
 @Component
@@ -14,7 +14,10 @@ import org.springframework.stereotype.Component;
 public class SettlementValueUpDownStrategy extends AbstractValueUpDownStrategy {
     @Override
     public Integer getValue(Long userId) {
-        //查询该用户的结算额度
+        /**
+         * 自己实现业务逻辑
+         * 从数据库中检索当前用户的结算额
+         */
         return 50000;
     }
 }

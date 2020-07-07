@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * created by liukai on 2020-07-03
+ * created by japhone on 2020-07-03
  * 消费、销售、结算额度升降级策略
  */
 public abstract class AbstractValueUpDownStrategy implements IUpDownStrategy {

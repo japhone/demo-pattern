@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * created by liukai on 2020-07-03
+ * created by japhone on 2020-07-03
  * 特殊商品升降级策略
  */
 @Component
@@ -54,7 +54,7 @@ public class GoodsUpDownStrategy implements IGoodsUpDownStrategy {
      * 特殊商品的标识与升降级条件中的conditionValue相同
      * @param id
      * @param conditionValue
-     * @return
+     * @return 返回购买礼包商品的个数
      */
     private int countPackFlagOrder(Long id, String conditionValue) {
         return 0;

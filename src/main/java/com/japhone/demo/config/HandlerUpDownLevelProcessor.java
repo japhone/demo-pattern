@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * created by liukai on 2020-06-16
+ * created by japhone on 2020-06-16
  * 根据升降级条件类型，初始化HandlerUpDownLevelContext
  * 建立升降级条件类型与策略类的对应关系
  */

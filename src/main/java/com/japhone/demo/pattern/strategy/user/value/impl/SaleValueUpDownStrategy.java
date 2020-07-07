@@ -6,7 +6,7 @@ import com.japhone.demo.pattern.strategy.user.value.AbstractValueUpDownStrategy;
 import org.springframework.stereotype.Component;
 
 /**
- * created by liukai on 2020-07-03
+ * created by japhone on 2020-07-03
  * 销售额度升降级策略
  */
 @Component
@@ -14,7 +14,10 @@ import org.springframework.stereotype.Component;
 public class SaleValueUpDownStrategy extends AbstractValueUpDownStrategy {
     @Override
     public Integer getValue(Long userId) {
-        //查询该用户的销售额
+        /**
+         * 自己实现业务逻辑
+         * 从数据库中检索当前用户的销售额
+         */
         return 20000;
     }
 }

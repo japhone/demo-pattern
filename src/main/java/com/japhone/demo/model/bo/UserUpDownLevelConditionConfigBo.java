@@ -3,7 +3,7 @@ package com.japhone.demo.model.bo;
 import java.io.Serializable;
 
 /**
- * created by liukai on 2020-07-03
+ * created by japhone on 2020-07-03
  * 升降级条件业务类
  */
 public class UserUpDownLevelConditionConfigBo implements Serializable {

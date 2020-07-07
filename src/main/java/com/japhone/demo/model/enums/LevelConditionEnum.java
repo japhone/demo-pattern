@@ -1,7 +1,7 @@
 package com.japhone.demo.model.enums;
 
 /**
- * created by liukai on 2020-04-15
+ * created by japhone on 2020-04-15
  * 升降级条件
  */
 public enum LevelConditionEnum {
@@ -22,7 +22,6 @@ public enum LevelConditionEnum {
      * 销售累计额度
      */
     SALES_VALUE(2040, "销售累计额度"),
-
     /**
      * 根据商品标识
      */
@@ -30,19 +29,19 @@ public enum LevelConditionEnum {
 
     private Integer code;
 
-    private String desc;
+    private String description;
 
-    LevelConditionEnum(Integer code, String desc) {
+    LevelConditionEnum(Integer code, String description) {
         this.code = code;
-        this.desc = desc;
+        this.description = description;
     }
 
     public Integer getCode() {
         return code;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
 }
