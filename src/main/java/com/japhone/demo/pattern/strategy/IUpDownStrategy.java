@@ -1,7 +1,7 @@
 package com.japhone.demo.pattern.strategy;
 
-import com.japhone.demo.model.bo.UserBo;
-import com.japhone.demo.model.bo.UserUpDownLevelConditionConfigBo;
+import com.japhone.demo.model.entity.User;
+import com.japhone.demo.model.entity.UserUpDownLevelConfig;
 
 /**
  * created by japhone on 2020-07-03
@@ -11,10 +11,10 @@ public interface IUpDownStrategy {
 
     /**
      * 检查是否满足升降级条件
-     * @param userBo 当前用户
-     * @param conditionConfig 升降级条件
+     * @param user 当前用户
+     * @param config 升降级条件
      * @return
      */
-    boolean check(UserBo userBo, UserUpDownLevelConditionConfigBo conditionConfig);
+    boolean check(User user, UserUpDownLevelConfig config);
 
 }

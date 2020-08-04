@@ -9,11 +9,11 @@ public enum LevelConditionEnum {
     /**
      * 消费累计额度
      */
-    CONSUMPTION_VALUE(2010, "消费累计额度"),
+    CONSUMPTION_AMOUNT(2010, "消费累计额度"),
     /**
      * 结算累计额度
      */
-    SETTLEMENT_VALUE(2020, "结算累计额度"),
+    SETTLEMENT_AMOUNT(2020, "结算累计额度"),
     /**
      * 同级以上用户数
      */
@@ -21,7 +21,7 @@ public enum LevelConditionEnum {
     /**
      * 销售累计额度
      */
-    SALES_VALUE(2040, "销售累计额度"),
+    SALES_AMOUNT(2040, "销售累计额度"),
     /**
      * 根据商品标识
      */

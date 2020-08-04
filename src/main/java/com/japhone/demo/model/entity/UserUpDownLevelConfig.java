@@ -1,62 +1,41 @@
-package com.japhone.demo.model.bo;
+package com.japhone.demo.model.entity;
 
 import java.io.Serializable;
 
 /**
- * created by japhone on 2020-07-03
- * 升降级条件业务类
+ * created by japhone on 2020-07-31
  */
-public class UserUpDownLevelConditionConfigBo implements Serializable {
+public class UserUpDownLevelConfig implements Serializable {
 
-    /**
-     * 主键id
-     */
+    /**主键**/
     private Long id;
 
-    /**
-     * 源级别编码
-     */
+    /**源级别编码**/
     private Integer srcLevelCode;
 
-    /**
-     * 源级别名称
-     */
+    /**源级别名称**/
     private String srcLevelName;
 
-    /**
-     * 目标级别编码
-     */
+    /**目标级别编码**/
     private Integer targetLevelCode;
 
-    /**
-     * 目标级别名称
-     */
+    /**目标级别名称**/
     private String targetLevelName;
 
-    /**
-     * 升降级标识：1-升级、2-降级
-     */
-    private Integer upDownFlag;
-
-    /**
-     * 条件编码
-     */
+    /**条件编码**/
     private Integer conditionCode;
 
-    /**
-     * 条件名称
-     */
+    /**条件名称**/
     private String conditionName;
 
-    /**
-     * 条件值
-     */
+    /**条件值**/
     private String conditionValue;
 
-    /**
-     * 描述
-     */
+    /**描述**/
     private String description;
+
+    /**升降级标识1.升级，2.降级**/
+    private Integer upDownFlag;
 
     public Long getId() {
         return id;
@@ -98,14 +77,6 @@ public class UserUpDownLevelConditionConfigBo implements Serializable {
         this.targetLevelName = targetLevelName;
     }
 
-    public Integer getUpDownFlag() {
-        return upDownFlag;
-    }
-
-    public void setUpDownFlag(Integer upDownFlag) {
-        this.upDownFlag = upDownFlag;
-    }
-
     public Integer getConditionCode() {
         return conditionCode;
     }
@@ -136,5 +107,29 @@ public class UserUpDownLevelConditionConfigBo implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getUpDownFlag() {
+        return upDownFlag;
+    }
+
+    public void setUpDownFlag(Integer upDownFlag) {
+        this.upDownFlag = upDownFlag;
+    }
+
+    @Override
+    public String toString() {
+        return "UserUpDownLevelConfig{" +
+                "id=" + id +
+                ", srcLevelCode=" + srcLevelCode +
+                ", srcLevelName='" + srcLevelName + '\'' +
+                ", targetLevelCode=" + targetLevelCode +
+                ", targetLevelName='" + targetLevelName + '\'' +
+                ", conditionCode=" + conditionCode +
+                ", conditionName='" + conditionName + '\'' +
+                ", conditionValue='" + conditionValue + '\'' +
+                ", description='" + description + '\'' +
+                ", upDownFlag=" + upDownFlag +
+                '}';
     }
 }

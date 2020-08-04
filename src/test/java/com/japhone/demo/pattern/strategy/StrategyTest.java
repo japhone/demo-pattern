@@ -1,18 +1,21 @@
 package com.japhone.demo.pattern.strategy;
 
-import com.japhone.demo.model.bo.UserBo;
-import com.japhone.demo.model.bo.UserUpDownLevelConditionConfigBo;
-import com.japhone.demo.model.enums.LevelCodeEnum;
+import com.japhone.demo.model.entity.User;
+import com.japhone.demo.model.entity.UserUpDownLevelConfig;
 import com.japhone.demo.model.enums.LevelConditionEnum;
-import com.japhone.demo.model.enums.LevelUpDownFlagEnum;
-import org.junit.jupiter.api.BeforeEach;
+import com.japhone.demo.pattern.strategy.goods.impl.GoodsUpDownStrategy;
+import com.japhone.demo.pattern.strategy.user.amount.impl.ConsumeAmountUpDownStrategy;
+import com.japhone.demo.pattern.strategy.user.amount.impl.SaleAmountUpDownStrategy;
+import com.japhone.demo.pattern.strategy.user.amount.impl.SettlementAmountUpDownStrategy;
+import com.japhone.demo.pattern.strategy.user.level.impl.UserLevelUpDownStrategy;
+import com.japhone.demo.service.UserService;
+import com.japhone.demo.service.UserUpDownLevelConfigService;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,85 +28,103 @@ public class StrategyTest {
 
     @Resource
     private UpDownLevelContext upDownLevelContext;
-
-    List<UserUpDownLevelConditionConfigBo> conditionList = null;
-    UserBo user = null;
+    @Resource
+    private UserService userService;
+    @Resource
+    private UserUpDownLevelConfigService userUpDownLevelConfigService;
+    @Resource
+    private ConsumeAmountUpDownStrategy consumeAmountUpDownStrategy;
+    @Resource
+    private SaleAmountUpDownStrategy saleAmountUpDownStrategy;
+    @Resource
+    private SettlementAmountUpDownStrategy settlementAmountUpDownStrategy;
+    @Resource
+    private GoodsUpDownStrategy goodsUpDownStrategy;
+    @Resource
+    private UserLevelUpDownStrategy userLevelUpDownStrategy;
 
     @Test
-    public void test(){
+    public void testUp(){
+        Long userId = 2l;
+        User user = userService.get(userId);
+
         IUpDownStrategy upDownStrategy;
 
-        if(conditionList != null && conditionList.size() > 0){
-            for(UserUpDownLevelConditionConfigBo upDownLevelConditionConfigBo : conditionList){
-                upDownStrategy = upDownLevelContext.getStrategy(upDownLevelConditionConfigBo.getConditionCode());
+        UserUpDownLevelConfig userUpDownLevelConfig = new UserUpDownLevelConfig();
+        userUpDownLevelConfig.setSrcLevelCode(user.getLevelCode());
+        List<UserUpDownLevelConfig> list = userUpDownLevelConfigService.list(userUpDownLevelConfig);
+        boolean b = false;
+        if(list != null && list.size() > 0){
+            for(UserUpDownLevelConfig config : list){
+                upDownStrategy = upDownLevelContext.getStrategy(config.getConditionCode());
 
                 logger.info("upDownStrategy: {}", upDownStrategy);
 
-                boolean b = upDownStrategy.check(user, upDownLevelConditionConfigBo);
+                b = upDownStrategy.check(user, config);
                 if(b){
-                    logger.info("用户ID:{}，满足升降条件", user.getId());
+                    logger.info("用户ID:{}，满足升降条件:{}", user.getId(), config);
+                    user.setLevelCode(config.getTargetLevelCode());
+                    user.setLevelName(config.getTargetLevelName());
+
+                    userService.save(user);
                     break;
                 }
             }
         }
+        if(b) {
+            logger.info("用户:{}，升级后的级别为:{}({})", user.getId(), user.getLevelName(), user.getLevelCode());
+        }else{
+            logger.info("用户:{}，不满足升级条件", user.getId());
+        }
     }
 
-    /**
-     * 初始化用户信息
-     */
-    @BeforeEach
-    public void initUser(){
-        user = new UserBo();
-        user.setId(1l);
-        user.setLevelCode(LevelCodeEnum.USER.getCode());
-    }
+    @Test
+    public void test(){
+        Long userId = 1l;
+        User user = userService.get(userId);
 
-    /**
-     * 初始化升降级条件
-     * conditionList为从数据库中检索出的升降级条件
-     */
-    @BeforeEach
-    public void initUpDownCondition(){
-        conditionList = new ArrayList<>();
+        IUpDownStrategy upDownStrategy;
 
-        UserUpDownLevelConditionConfigBo userUpDownLevelConditionConfigBo = new UserUpDownLevelConditionConfigBo();
-        userUpDownLevelConditionConfigBo.setId(1l);
-        userUpDownLevelConditionConfigBo.setSrcLevelCode(LevelCodeEnum.USER.getCode());
-        userUpDownLevelConditionConfigBo.setSrcLevelName(LevelCodeEnum.USER.getDescription());
-        userUpDownLevelConditionConfigBo.setTargetLevelCode(LevelCodeEnum.VIP.getCode());
-        userUpDownLevelConditionConfigBo.setTargetLevelName(LevelCodeEnum.VIP.getDescription());
-        userUpDownLevelConditionConfigBo.setConditionCode(LevelConditionEnum.CONSUMPTION_VALUE.getCode());
-        userUpDownLevelConditionConfigBo.setConditionName(LevelConditionEnum.CONSUMPTION_VALUE.getDescription());
-        userUpDownLevelConditionConfigBo.setConditionValue("1000");
-        userUpDownLevelConditionConfigBo.setDescription("会员升VIP");
-        userUpDownLevelConditionConfigBo.setUpDownFlag(LevelUpDownFlagEnum.UP_FLAG.getCode());
-        conditionList.add(userUpDownLevelConditionConfigBo);
+        UserUpDownLevelConfig userUpDownLevelConfig = new UserUpDownLevelConfig();
+        userUpDownLevelConfig.setSrcLevelCode(user.getLevelCode());
+        List<UserUpDownLevelConfig> list = userUpDownLevelConfigService.list(userUpDownLevelConfig);
+        boolean b = false;
+        if(list != null && list.size() > 0){
+            for(UserUpDownLevelConfig config : list){
 
-        userUpDownLevelConditionConfigBo = new UserUpDownLevelConditionConfigBo();
-        userUpDownLevelConditionConfigBo.setId(2l);
-        userUpDownLevelConditionConfigBo.setSrcLevelCode(LevelCodeEnum.VIP.getCode());
-        userUpDownLevelConditionConfigBo.setSrcLevelName(LevelCodeEnum.VIP.getDescription());
-        userUpDownLevelConditionConfigBo.setTargetLevelCode(LevelCodeEnum.SPECIAL.getCode());
-        userUpDownLevelConditionConfigBo.setTargetLevelName(LevelCodeEnum.SPECIAL.getDescription());
-        userUpDownLevelConditionConfigBo.setConditionCode(LevelConditionEnum.SALES_VALUE.getCode());
-        userUpDownLevelConditionConfigBo.setConditionName(LevelConditionEnum.SALES_VALUE.getDescription());
-        userUpDownLevelConditionConfigBo.setConditionValue("5000");
-        userUpDownLevelConditionConfigBo.setDescription("VIP升特约店");
-        userUpDownLevelConditionConfigBo.setUpDownFlag(LevelUpDownFlagEnum.UP_FLAG.getCode());
-        conditionList.add(userUpDownLevelConditionConfigBo);
+                if(config.getConditionCode().compareTo(LevelConditionEnum.CONSUMPTION_AMOUNT.getCode()) == 0) {
+                    upDownStrategy = consumeAmountUpDownStrategy;
+                }else if(config.getConditionCode().compareTo(LevelConditionEnum.SALES_AMOUNT.getCode()) == 0) {
+                    upDownStrategy = saleAmountUpDownStrategy;
+                }else if(config.getConditionCode().compareTo(LevelConditionEnum.SETTLEMENT_AMOUNT.getCode()) == 0) {
+                    upDownStrategy = settlementAmountUpDownStrategy;
+                }else if(config.getConditionCode().compareTo(LevelConditionEnum.GOODS_FLAG.getCode()) == 0) {
+                    upDownStrategy = goodsUpDownStrategy;
+                }else if(config.getConditionCode().compareTo(LevelConditionEnum.SAME_UP_LEVEL_NUM.getCode()) == 0) {
+                    upDownStrategy = userLevelUpDownStrategy;
+                }else{
+                    logger.info("没有对应的升降级类型");
+                    continue;
+                }
 
-        userUpDownLevelConditionConfigBo = new UserUpDownLevelConditionConfigBo();
-        userUpDownLevelConditionConfigBo.setId(3l);
-        userUpDownLevelConditionConfigBo.setSrcLevelCode(LevelCodeEnum.VIP.getCode());
-        userUpDownLevelConditionConfigBo.setSrcLevelName(LevelCodeEnum.VIP.getDescription());
-        userUpDownLevelConditionConfigBo.setTargetLevelCode(LevelCodeEnum.SPECIAL.getCode());
-        userUpDownLevelConditionConfigBo.setTargetLevelName(LevelCodeEnum.SPECIAL.getDescription());
-        userUpDownLevelConditionConfigBo.setConditionCode(LevelConditionEnum.SAME_UP_LEVEL_NUM.getCode());
-        userUpDownLevelConditionConfigBo.setConditionName(LevelConditionEnum.SAME_UP_LEVEL_NUM.getDescription());
-        userUpDownLevelConditionConfigBo.setConditionValue("10");
-        userUpDownLevelConditionConfigBo.setDescription("VIP升特约店");
-        userUpDownLevelConditionConfigBo.setUpDownFlag(LevelUpDownFlagEnum.UP_FLAG.getCode());
-        conditionList.add(userUpDownLevelConditionConfigBo);
+                logger.info("upDownStrategy: {}", upDownStrategy);
+
+                b = upDownStrategy.check(user, config);
+                if(b){
+                    logger.info("用户ID:{}，满足升降条件:{}", user.getId(), config);
+                    user.setLevelCode(config.getTargetLevelCode());
+                    user.setLevelName(config.getTargetLevelName());
+
+                    userService.save(user);
+                    break;
+                }
+            }
+        }
+        if(b) {
+            logger.info("用户:{}，升级后的级别为:{}({})", user.getId(), user.getLevelName(), user.getLevelCode());
+        }else{
+            logger.info("用户:{}，不满足升级条件", user.getId());
+        }
     }
 
 }

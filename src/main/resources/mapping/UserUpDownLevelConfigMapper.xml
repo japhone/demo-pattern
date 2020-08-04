@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.japhone.demo.mapper.UserUpDownLevelConfigMapper">
+    <resultMap id="BaseResultMap" type="com.japhone.demo.model.entity.UserUpDownLevelConfig">
+        <id column="id" property="id" />
+        <result column="src_level_code" property="srcLevelCode" />
+        <result column="src_level_name" property="srcLevelName" />
+        <result column="target_level_code" property="targetLevelCode" />
+        <result column="target_level_name" property="targetLevelName" />
+        <result column="condition_code" property="conditionCode" />
+        <result column="condition_name" property="conditionName" />
+        <result column="condition_value" property="conditionValue" />
+        <result column="description" property="description" />
+        <result column="up_down_flag" property="upDownFlag"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, src_level_code, src_level_name, target_level_code, target_level_name, condition_code
+    , condition_name, condition_value, description, up_down_flag
+  </sql>
+
+    <select id="list" parameterType="com.japhone.demo.model.entity.UserUpDownLevelConfig" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_up_down_level_config
+        where 1=1
+        <if test="userUpDownLevelConfig != null ">
+            <if test="userUpDownLevelConfig.srcLevelCode != null">
+                and src_level_code=#{userUpDownLevelConfig.srcLevelCode}
+            </if>
+        </if>
+    </select>
+</mapper>
